@@ -1,0 +1,50 @@
+        <aside class="left-sidebar sidebar-dark" id="left-sidebar">
+          <div id="sidebar" class="sidebar sidebar-with-footer">
+            <!-- Aplication Brand -->
+            <div class="app-brand">
+              <a href="/dashboard">
+                <img src="img/abc-logo-white.png" alt="ABC Retail">
+                <span class="d-none brand-name">ABC Retail</span>
+              </a>
+            </div>
+            <!-- begin sidebar scrollbar -->
+            <div class="sidebar-left" data-simplebar style="height: 100%;">
+              <!-- sidebar menu -->
+              <ul class="nav sidebar-inner" id="sidebar-menu">
+                
+                  <li class="{{$dash_active}}">
+                    <a class="sidenav-item-link" href="/dashboard">
+                      <i class="mdi mdi-briefcase-account-outline"></i>
+                      <span class="nav-text">Dashboard</span>
+                    </a>
+                  </li>
+                
+                  <li class="{{$products_active}}">
+                    <a class="sidenav-item-link" href="/products">
+                      <i class="mdi mdi-chart-line"></i>
+                      <span class="nav-text">Products</span>
+                    </a>
+                  </li>  
+                
+                  <li class="d-none section-title">
+                    Apps
+                  </li>
+
+                  <li class="{{$scans_active}}"> 
+                    <a class="sidenav-item-link" href="/scans">
+                      <i class="mdi mdi-wechat"></i>
+                      <span class="nav-text">QR Scans</span>
+                    </a>
+                  </li>       
+                
+              </ul>
+
+            </div>
+
+            <div class="sidebar-footer">
+              <div class="sidebar-footer-content">
+                <div class="p-2 text-white"> &copy;{{date('Y')}}</div>
+              </div>
+            </div>
+          </div>
+        </aside>
