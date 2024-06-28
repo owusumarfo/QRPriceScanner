@@ -38,6 +38,6 @@ Template::view('dashboard.html', [
     'page_title' => 'Dashboard',
     'dash_active' => 'active',
     'colors' => ['red','blue','green'],
-    'products' => get_all_products('4')
+    'products' => get_all_products('3')
   ]);
 ?>

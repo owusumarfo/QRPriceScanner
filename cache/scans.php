@@ -165,56 +165,14 @@
         ===================================== -->
         <div class="content-wrapper">
             <div class="content">                
-                  <!-- Top Statistics -->
-                  <div class="row">
 
-                    <div class="col-xl-4 col-sm-6">
-                      <div class="card card-default card-mini mb-5">
-                        <div class="card-header">
-                          <h2><?php echo get_total_products() ?></h2>
-                          <div class="sub-title">
-                            <span class="mr-1">Total Products</span> 
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-xl-4 col-sm-6">
-                        <div class="card card-default card-mini mb-5">
-                          <div class="card-header">
-                            <h2><?php echo get_total_stock() ?></h2>
-                            <div class="sub-title">
-                              <span class="mr-1">Total Items in Stock</span> 
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-4 col-sm-6">
-                        <div class="card card-default card-mini mb-5">
-                          <div class="card-header">
-                            <h2><?php echo get_total_scans() ?></h2>
-                            <div class="sub-title">
-                              <span class="mr-1">QR Scans</span> 
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                  </div>
-
-
+                
                 <!-- Table Product -->
                 <div class="row">
                   <div class="col-12">
                     <div class="card card-default">
                       <div class="card-header">
-                        <h2>Products</h2>
-                        <div class="dropdown">
-                            <a href="/add-product" class="btn btn-primary">
-                                <i class=" mdi mdi-star-outline mr-1"></i>
-                                Add New
-                            </a>
-                        </div>
+                        <h2>Product Scans (<?php echo get_total_scans() ?>)</h2>
                       </div>
                       <div class="card-body">
                         <table id="productsTable" class="table table-responsive table-hover table-product" style="width:100%">
@@ -223,40 +181,21 @@
                               <th></th>
                               <th>ID</th>
                               <th>Product Name</th>
-                              <th>Cost Price</th>
-                              <th>Selling Price</th>
-                              <th>Discounted Price</th>
-                              <th>Stock</th>
-                              <th></th>
+                              <th>Scans</th>
                             </tr>
                           </thead>
                           <tbody>
 
 
 
-                            <?php foreach($products as $product): ?>
+                            <?php foreach($scanned_products as $product): ?>
                             <tr>
                               <td class="py-0">
                                 <img src="<?php echo $product['qr_code_data'] ?>" alt="QR Image">
                               </td>
                               <td><?php echo $product['product_id'] ?></td>
                               <td><?php echo $product['product_name'] ?></td>
-                              <td><sup>GHS</sup> <?php echo $product['cost_price'] ?></td>
-                              <td><sup>GHS</sup> <?php echo $product['selling_price'] ?></td>
-                              <td><sup>GHS</sup> <span class="font-weight-bold"><?php echo $product['discounted_price'] ?></span> <small class="font-weight-bold text-danger"> <?php echo calculateDiscount($product['selling_price'], $product['discounted_price']) ?>%</small></td>
-                              <td><?php echo $product['stock'] ?></td>
-                              <td>
-                                <div class="dropdown">
-                                  <a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                  </a>
-
-                                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" href="/edit-product?id=<?php echo $product['product_id'] ?>">Edit</a>
-                                    <a class="dropdown-item" href="/delete-product?id=<?php echo $product['product_id'] ?>" onclick="return confirm('Are you sure you want to delete this item?')">Delete</a>
-                                  </div>
-                                </div>
-                              </td>
+                              <td> <?php echo $product['scan_count'] ?> </td>
                             </tr>
                             <?php endforeach; ?>
 
@@ -264,135 +203,11 @@
                           </tbody>
                         </table>
 
-                        <a class="d-block mt-3" href="/products">See all items</a>
-
                       </div>
                     </div>
                   </div>
                 </div>
 
-              
-
-              <!-- Stock Modal -->
-              <div class="modal fade modal-stock" id="modal-stock" aria-labelledby="modal-stock" aria-hidden="true">
-                <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
-                  <form action="#">
-                    <div class="modal-content">
-                      <div class="modal-header align-items-center p3 p-md-5">
-                        <h2 class="modal-title" id="exampleModalGridTitle">Add Stock</h2>
-                        <div>
-                          <button type="button" class="btn btn-light btn-pill mr-1 mr-md-2" data-dismiss="modal"> cancel </button>
-                          <button type="submit" class="btn btn-primary  btn-pill" data-dismiss="modal"> save </button>
-                        </div>
-
-                      </div>
-                      <div class="modal-body p3 p-md-5">
-                        <div class="row">
-                          <div class="col-lg-8">
-                            <h3 class="h5 mb-5">Product Information</h3>
-                            <div class="form-group mb-5">
-                              <label for="new-product">Product Title</label>
-                              <input type="text" class="form-control" id="new-product" placeholder="Add Product">
-                            </div>
-                            <div class="form-row mb-4">
-                              <div class="col">
-                                <label for="price">Price</label>
-                                <div class="input-group">
-                                  <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1">$</span>
-                                  </div>
-                                  <input type="text" class="form-control" id="price" placeholder="Price" aria-label="Price"
-                                    aria-describedby="basic-addon1">
-                                </div>
-                              </div>
-                              <div class="col">
-                                <label for="sale-price">Sale Price</label>
-                                <div class="input-group">
-                                  <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1">$</span>
-                                  </div>
-                                  <input type="text" class="form-control" id="sale-price" placeholder="Sale Price" aria-label="SalePrice"
-                                    aria-describedby="basic-addon1">
-                                </div>
-                              </div>
-                            </div>
-
-                            <div class="product-type mb-3 ">
-                              <label class="d-block" for="sale-price">Product Type <i class="mdi mdi-help-circle-outline"></i> </label>
-                              <div>
-
-                                <div class="custom-control custom-radio d-inline-block mr-3 mb-3">
-                                  <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked="checked">
-                                  <label class="custom-control-label" for="customRadio1">Physical Good</label>
-                                </div>
-
-                                <div class="custom-control custom-radio d-inline-block mr-3 mb-3">
-                                  <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-                                  <label class="custom-control-label" for="customRadio2">Digital Good</label>
-                                </div>
-
-                                <div class="custom-control custom-radio d-inline-block mr-3 mb-3">
-                                  <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
-                                  <label class="custom-control-label" for="customRadio3">Service</label>
-                                </div>
-
-                              </div>
-                            </div>
-
-                            <div class="editor">
-                              <label class="d-block" for="sale-price">Description <i class="mdi mdi-help-circle-outline"></i></label>
-                              <div id="standalone">
-                                <div id="toolbar">
-                                  <span class="ql-formats">
-                                    <select class="ql-font"></select>
-                                    <select class="ql-size"></select>
-                                  </span>
-                                  <span class="ql-formats">
-                                    <button class="ql-bold"></button>
-                                    <button class="ql-italic"></button>
-                                    <button class="ql-underline"></button>
-                                  </span>
-                                  <span class="ql-formats">
-                                    <select class="ql-color"></select>
-                                  </span>
-                                  <span class="ql-formats">
-                                    <button class="ql-blockquote"></button>
-                                  </span>
-                                  <span class="ql-formats">
-                                    <button class="ql-list" value="ordered"></button>
-                                    <button class="ql-list" value="bullet"></button>
-                                    <button class="ql-indent" value="-1"></button>
-                                    <button class="ql-indent" value="+1"></button>
-                                  </span>
-                                  <span class="ql-formats">
-                                    <button class="ql-direction" value="rtl"></button>
-                                    <select class="ql-align"></select>
-                                  </span>
-                                </div>
-                              </div>
-                              <div id="editor"></div>
-
-                              <div class="custom-control custom-checkbox d-inline-block mt-2">
-                                <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                <label class="custom-control-label" for="customCheck2">Hide product from published site</label>
-                              </div>
-
-                            </div>
-
-                          </div>
-                          <div class="col-lg-4">
-                            <div class="custom-file">
-                              <input type="file" class="custom-file-input" id="customFile" placeholder="please imgae here">
-                              <span class="upload-image">Click here to <span class="text-primary">add product image.</span> </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                    </div>
-                  </form>
-                </div>
-              </div>
 
             </div>
           

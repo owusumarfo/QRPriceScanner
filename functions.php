@@ -109,9 +109,12 @@
   function get_all_products($limit) {
     $pdo = connect_to_db();
     // $sql = "SELECT * FROM products LIMIT $limit";
+
     $sql = "SELECT p.*, qr.qr_code_data
         FROM products p
-        LEFT JOIN qr_codes qr ON p.product_id = qr.product_id LIMIT $limit";
+        LEFT JOIN qr_codes qr ON p.product_id = qr.product_id 
+        ORDER BY product_id desc
+        LIMIT $limit";
 
     $stmt = $pdo->prepare($sql);
     
